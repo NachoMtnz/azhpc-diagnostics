@@ -201,7 +201,7 @@ is_nvidia_sku() {
     \
     [[ "$clean" =~ ^standard_nv(6|12|24)$ ]] ||
     [[ "$clean" =~ ^standard_nv(6|12|24)s_v2$ ]] ||
-    [[ "$clean" =~ ^standard_nv(12|24|48)s_v3$ ]] 
+    [[ "$clean" =~ ^standard_nv(12|24|48)s_v3$ ]] ||
     [[ "$clean" =~ ^standard_nv(6|12|18|36|72)([adms]{3,4})_v5$ ]] 
 
 }
