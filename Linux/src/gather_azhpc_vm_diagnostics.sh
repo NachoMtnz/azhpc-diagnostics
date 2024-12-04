@@ -187,16 +187,23 @@ is_nvidia_sku() {
     [[ "$clean" =~ ^standard_nc(6|12|24r?)$ ]] ||
     [[ "$clean" =~ ^standard_nc(6|12|24r?)s_v2$ ]] ||
     [[ "$clean" =~ ^standard_nc(6|12|24r?)s_v3$ ]] ||
+    [[ "$clean" =~ ^standard_nc(24|48|96)ads_v4$ ]] ||
+    [[ "$clean" =~ ^standard_nc(40|80)([adis]{3,4})_h100_v5$ ]] ||
+    [[ "$clean" =~ ^standard_ncc(40)ads_h100_v5$ ]] ||
     \
     [[ "$clean" =~ ^standard_nc(4|8|16|64)as_t4_v3$ ]] ||
     \
     [[ "$clean" =~ ^standard_nd(6|12|24r?)s$ ]] ||
     [[ "$clean" =~ ^standard_nd40r?s_v2$ ]] ||
     [[ "$clean" =~ ^standard_nd96am?sr(_a100)?_v4$ ]] ||
+    [[ "$clean" =~ ^standard_nd96isr_h100_v5$ ]] ||
+    [[ "$clean" =~ ^standard_nd96isr_h200_v5$ ]] ||
     \
     [[ "$clean" =~ ^standard_nv(6|12|24)$ ]] ||
     [[ "$clean" =~ ^standard_nv(6|12|24)s_v2$ ]] ||
-    [[ "$clean" =~ ^standard_nv(12|24|48)s_v3$ ]]
+    [[ "$clean" =~ ^standard_nv(12|24|48)s_v3$ ]] 
+    [[ "$clean" =~ ^standard_nv(6|12|18|36|72)([adms]{3,4})_v5$ ]] 
+
 }
 
 is_gpu_compute_sku() {
@@ -211,7 +218,8 @@ is_amd_gpu_sku() {
     local clean
     clean=$(echo "$1" | sed s/_Promo//g | tr '[:upper:]' '[:lower:]')
     
-    [[ "$clean" =~ ^standard_nv(4|8|16|32)as_v4$ ]]
+    [[ "$clean" =~ ^standard_nv(4|8|16|32)as_v4$ ]] ||
+    [[ "$clean" =~ ^standard_nv(4|8|12|24|28)([adms]{3,4})__v710_v5$ ]] 
 }
 
 get_cpu_list() {
