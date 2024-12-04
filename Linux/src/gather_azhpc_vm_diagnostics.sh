@@ -219,7 +219,7 @@ is_amd_gpu_sku() {
     clean=$(echo "$1" | sed s/_Promo//g | tr '[:upper:]' '[:lower:]')
     
     [[ "$clean" =~ ^standard_nv(4|8|16|32)as_v4$ ]] ||
-    [[ "$clean" =~ ^standard_nv(4|8|12|24|28)([adms]{3,4})__v710_v5$ ]] 
+    [[ "$clean" =~ ^standard_nv(4|8|12|24|28)([adms]{3,4})_v710_v5$ ]] 
 }
 
 get_cpu_list() {
