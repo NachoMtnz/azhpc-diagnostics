@@ -1,7 +1,7 @@
 # Create a temp directory
 $DIAG_DIR = [System.IO.Path]::GetRandomFileName()
 New-Item -Path $DIAG_DIR -ItemType Directory;
-Set-Location -PAth $DIAG_DIR -PassThru
+Set-Location -Path $DIAG_DIR -PassThru
 
 # Information about compute
 $Uri = "http://169.254.169.254/metadata/instance?api-version=2020-06-01";
@@ -30,17 +30,41 @@ if ($VM_Size -match '^*_N.*$')
     {
         $Nvidia_Dev | Out-File nvidia-info.txt;
 
-        $Nvidia_SMI = & "C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi.exe";
+        $Nvidia_command = Get-Command nvidia-smi
+
+        $Nvidia_SMI = & $Nvidia_command.Source ;
         $Nvidia_SMI | Out-File nvidia-smi.txt;
 
-        $Nvidia_SMI_Q = & "C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi.exe" -q;
+        $Nvidia_SMI_Q = & $Nvidia_command.Source -q;
         $Nvidia_SMI_Q | Out-File nvidia-smi_q.txt;
     }
     else 
     {
         Write-Output "No Nvidia Devices Found";
     }
+
+    
+    $AMD_Dev = Get-CimInstance -ClassName Win32_PnPEntity -Filter 'Manufacturer LIKE "AMD%"';
+    if($AMD_Dev -ne $null -or $AMD_Dev -ne "")
+    {
+        $AMD_Dev | Out-File amd-info.txt;
+
+        $ROCM_command = Get-Command rocm-smi
+
+        $ROCM_SMI = & $ROCM_command.Source -a;
+        $ROCM_SMI | Out-File rocm-smi.txt;
+    }
+    else 
+    {
+        Write-Output "No AMD Devices Found";
+    }
+    
+    dxdiag /t dxdiag-info.txt
+    # Display the contents
+    $dxdiagOutput
+
 }
+
 
 # If the compute size supports InfiniBand the VM size should include r
 if ($VM_Size -match '^.*_.*r.*$')
