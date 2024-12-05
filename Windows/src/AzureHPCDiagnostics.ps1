@@ -58,10 +58,11 @@ if ($VM_Size -match '^*_N.*$')
     {
         Write-Output "No AMD Devices Found";
     }
-    
+
+    # Gather the dxdiag
     dxdiag /t dxdiag-info.txt
-    # Display the contents
-    $dxdiagOutput
+    # Gather the policies for AVD checks
+    gpresult /H gpresult.html
 
 }
 
